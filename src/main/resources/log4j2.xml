@@ -1,1 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Http name="SplunkHttp" url=${splunk_url}>
+            <Property name="Authorization">Splunk ${sys:splunk_access_token}</Property>
+            <Property name="batch_size_count">${batch_size_count}</Property>
+            <Property name="Content-Type">application/json</Property>
+            <JsonLayout compact="true" eventEol="true">
+                <KeyValuePair key="host" value="${sys:host}" />
+                <KeyValuePair key="source" value="${sys:source}" />
+                <KeyValuePair key="index" value="${sys:index}" />
+                <KeyValuePair key="sourcetype" value="${sys:sourcetype}" />
+            </JsonLayout>
+        </Http>
+    </Appenders>
 
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="SplunkHttp"/>
+        </Root>
+    </Loggers>
+</Configuration>
